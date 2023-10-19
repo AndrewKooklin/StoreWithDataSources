@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\repos\StoreWithDataSources\obj\Debug\
+C:\repos\StoreWithDataSources\obj\Release\
 StoreWithDataSources
 none
 false
-DEBUG;TRACE
+TRACE
 C:\repos\StoreWithDataSources\App.xaml
 3-1182434587
 
