@@ -103,9 +103,13 @@ namespace StoreWithDataSources
             {
                 if (sqlCommand.ExecuteNonQuery() == 1)
                 {
-                    StoreWithDataSources.Properties.Settings.Default.UserName = userName;
-                    StoreWithDataSources.Properties.Settings.Default.Password = password;
-                    StoreWithDataSources.Properties.Settings.Default.Save();
+                    if (chbRememberMe.IsChecked)
+                    {
+                        StoreWithDataSources.Properties.Settings.Default.UserName = userName;
+                        StoreWithDataSources.Properties.Settings.Default.Password = password;
+                        StoreWithDataSources.Properties.Settings.Default.Save();
+                    }
+                    
                     MessageBox.Show("You are registered", "Succsess", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }

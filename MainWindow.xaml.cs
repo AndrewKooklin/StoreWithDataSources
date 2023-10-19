@@ -32,12 +32,6 @@ namespace StoreWithDataSources
             InitializeComponent();
         }
 
-        private void Cancel_Handler(object sender, RoutedEventArgs e)
-        {
-            tbUserName.Text = "";
-            txtPassword.Clear();
-        }
-
         private void LogIn_Handler(object sender, RoutedEventArgs e)
         {
             if (check.CheckUser(tbUserName.Text, txtPassword.Password))
