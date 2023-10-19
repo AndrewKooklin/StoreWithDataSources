@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StoreWithDataSources"
         mc:Ignorable="d"
-        Title="SimpleWindow" Height="450" Width="668">
+        Title="SimpleWindow" 
+        Height="450"
+        MinHeight="450"
+        MaxHeight="450"
+        Width="668"
+        MinWidth="668"
+        MaxWidth="668">
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -58,16 +64,18 @@
             HorizontalAlignment="Left" 
             Width="274" />
         <CheckBox x:Name="cbEyePassword"
-                      
-                  Width="20"
-                  Height="20"
+                   Visibility="Hidden"   
+                  Width="25"
+                  Height="25"
                   Checked="cbEye_Checked"
                   Unchecked="cbEye_Unchecked"
-                  Margin="400,0,0,20">
+                  Margin="460,168,100,220">
             <CheckBox.Template>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel Orientation="Horizontal">
-                        <Image x:Name="CheckMark" Source="pack://application:,,,/Img/CloseEye.jpg" Width="20" Height="20" />
+                        <Image x:Name="CheckMark" Source="pack://application:,,,/Img/CloseEye.jpg" 
+                               Width="25" 
+                               Height="25" />
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
@@ -105,15 +113,17 @@
             Width="274" />
         <CheckBox x:Name="cbEyeConfirmPassword"
                    Visibility="Hidden"   
-                  Width="20"
-                  Height="20"
+                  Width="25"
+                  Height="25"
                   Checked="cbEye_Checked"
                   Unchecked="cbEye_Unchecked"
-                  Margin="400,120,0,0">
+                  Margin="460,240,100,150">
             <CheckBox.Template>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel Orientation="Horizontal">
-                        <Image x:Name="CheckMark" Source="pack://application:,,,/Img/CloseEye.jpg" Width="20" Height="20" />
+                        <Image x:Name="CheckMark" Source="pack://application:,,,/Img/CloseEye.jpg" 
+                               Width="25" 
+                               Height="25" />
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
