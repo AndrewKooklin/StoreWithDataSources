@@ -16,6 +16,10 @@ namespace StoreWithDataSources
     public partial class RegistrationWindow : Window
     {
         GetData data = new GetData();
+        Check check = new Check();
+        private string password = "";
+        private string confirmPassword = "";
+        public bool RememberMeIsChecked { get; set; }
         public RegistrationWindow()
         {
             InitializeComponent();
@@ -23,12 +27,19 @@ namespace StoreWithDataSources
         private void TxtPasswordbox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (txtPassword.Password.Length > 0)
+            {
                 cbEyePassword.Visibility = Visibility.Visible;
-            else
-                cbEyePassword.Visibility = Visibility.Hidden;
+                password = txtPassword.Password;
+            }   
+            else cbEyePassword.Visibility = Visibility.Hidden;
+
             if (txtConfirmPassword.Password.Length > 0)
+            {
                 cbEyeConfirmPassword.Visibility = Visibility.Visible;
+                confirmPassword = txtConfirmPassword.Password;
+            }   
             else cbEyeConfirmPassword.Visibility = Visibility.Hidden;
+            
         }
 
         void ShowPassword()
@@ -38,12 +49,14 @@ namespace StoreWithDataSources
                 txtVisiblePassword.Visibility = Visibility.Visible;
                 txtPassword.Visibility = Visibility.Hidden;
                 txtVisiblePassword.Text = txtPassword.Password;
+                password = txtVisiblePassword.Text;
             }
             if (cbEyeConfirmPassword.IsFocused)
             {
                 txtVisibleConfirmPassword.Visibility = Visibility.Visible;
                 txtConfirmPassword.Visibility = Visibility.Hidden;
                 txtVisibleConfirmPassword.Text = txtConfirmPassword.Password;
+                confirmPassword = txtVisibleConfirmPassword.Text;
             }
 
         }
@@ -53,12 +66,14 @@ namespace StoreWithDataSources
             {
                 txtVisiblePassword.Visibility = Visibility.Hidden;
                 txtPassword.Visibility = Visibility.Visible;
+                password = txtPassword.Password;
                 txtPassword.Focus();
             }
             if (cbEyeConfirmPassword.IsFocused)
             {
                 txtVisibleConfirmPassword.Visibility = Visibility.Hidden;
                 txtConfirmPassword.Visibility = Visibility.Visible;
+                confirmPassword = txtConfirmPassword.Password;
                 txtVisibleConfirmPassword.Focus();
             }
         }
@@ -76,25 +91,52 @@ namespace StoreWithDataSources
 
         private void Registration_Handler(object sender, RoutedEventArgs e)
         {
+
+            if (!check.CheckValidationUserName(tbUserName.Text))
+            {
+                MessageBox.Show("Username must be " +
+                                "\nat least 8 characters",
+                                "Require",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!check.CheckValidationPassword(password))
+            {
+                MessageBox.Show("Password must be at least " +
+                                "\ncontain 8 characters, " +
+                                "\nat least one small one," +
+                                "\none capital," +
+                                "\nand one digit", "Require",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                //txtPassword.Password = "";
+                return;
+            }
+
+            
+            string userName = "";
             GetData getData = new GetData();
             HashEncryption hashEncryption = new HashEncryption();
-            Check check = new Check();
+            
 
-            string userName = tbUserName.Text;
-            string password = hashEncryption.GetHashPassword(txtPassword.Password);
-            string confirmPassword = hashEncryption.GetHashPassword(txtConfirmPassword.Password);
+            userName = tbUserName.Text;
+            password = hashEncryption.GetHashPassword(password);
+            confirmPassword = hashEncryption.GetHashPassword(confirmPassword);
 
+            if (!password.Equals(confirmPassword))
+            {
+                MessageBox.Show("Passwords dont equal", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                password = "";
+                confirmPassword = "";
+                return;
+            }
 
             if (check.CheckUser(userName, password))
             {
                 return;
             }
 
-            if (!password.Equals(confirmPassword))
-            {
-                MessageBox.Show("Passwords dont equal", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            
 
             SqlCommand sqlCommand = new SqlCommand($"INSERT INTO Users(UserName, Password) VALUES('{userName}', '{password}')", getData.GetSqlConnection());
 
@@ -103,7 +145,7 @@ namespace StoreWithDataSources
             {
                 if (sqlCommand.ExecuteNonQuery() == 1)
                 {
-                    if (chbRememberMe.IsChecked)
+                    if (RememberMeIsChecked)
                     {
                         StoreWithDataSources.Properties.Settings.Default.UserName = userName;
                         StoreWithDataSources.Properties.Settings.Default.Password = password;
@@ -136,6 +178,26 @@ namespace StoreWithDataSources
             this.Hide();
             App.mainWindow.Show();
 
+        }
+
+        private void chbRememberMe_Checked(object sender, RoutedEventArgs e)
+        {
+            RememberMeIsChecked = true;
+        }
+
+        private void chbRememberMe_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RememberMeIsChecked = false;
+        }
+
+        private void txtVisiblePassword_Changed(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            password = txtVisiblePassword.Text;
+        }
+
+        private void txtVisibleConfirmPassword_Changed(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            confirmPassword = txtVisibleConfirmPassword.Text;
         }
     }
 }

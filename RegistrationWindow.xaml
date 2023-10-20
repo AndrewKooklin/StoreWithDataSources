@@ -11,48 +11,54 @@
         MaxHeight="450"
         Width="668"
         MinWidth="668"
-        MaxWidth="668">
+        MaxWidth="668"
+        WindowStartupLocation="CenterScreen">
+    
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
         <TextBlock x:Name="tbRegistrationForm"
-                Text="Registration form"
-               FontSize="28"
-               FontWeight="Bold"
-               HorizontalAlignment="Center"
-               TextAlignment="Center"
-               Margin="117,32,120.2,0" Width="374" Height="37" VerticalAlignment="Top" />
+                   Text="Registration form"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   TextAlignment="Center"
+                   Margin="117,32,120.2,0" 
+                   Width="374" 
+                   Height="37" 
+                   VerticalAlignment="Top" />
         <Label Content="UserName"
-            FontSize="20"
-            HorizontalAlignment="Left"
-            Margin="50,98,0,0"
-            Padding="72,0,0,0"
-            VerticalAlignment="Top" Width="181" />
+               FontSize="20"
+               HorizontalAlignment="Left"
+               Margin="50,98,0,0"
+               Padding="72,0,0,0"
+               VerticalAlignment="Top" Width="181" />
         <TextBox x:Name="tbUserName"
-            Height="40"
-            FontSize="20"
-            Padding="5,2,47,0" 
-            HorizontalAlignment="Left"
-            Margin="254,95,-24.8,0"    
-            VerticalAlignment="Top"
-            Width="274" />
+                 Height="40"
+                 FontSize="20"
+                 Padding="5,2,47,0" 
+                 HorizontalAlignment="Left"
+                 Margin="254,95,-24.8,0"    
+                 VerticalAlignment="Top"
+                 Width="274" />
         <Label Content="Password"
-            FontSize="20"
-            HorizontalAlignment="Left"
-            Margin="50,172,0,0"
-            Padding="82,0,0,0"
-            VerticalAlignment="Top" 
-            Width="181" />
+               FontSize="20"
+               HorizontalAlignment="Left"
+               Margin="50,172,0,0"
+               Padding="82,0,0,0"
+               VerticalAlignment="Top" 
+               Width="181" />
         <TextBox x:Name="txtVisiblePassword"
-            Height="40"    
-             FontSize="20"
-             Padding="5,2,47,0"
-             HorizontalAlignment="Left"
-             Margin="254,160,0,0"
-             VerticalAlignment="Top"
-             Width="274">
-
+                 Height="40"    
+                 FontSize="20"
+                 Padding="5,2,47,0"
+                 HorizontalAlignment="Left"
+                 Margin="254,160,0,0"
+                 VerticalAlignment="Top"
+                 Width="274" 
+                 TextChanged="txtVisiblePassword_Changed">
         </TextBox>
         <PasswordBox x:Name="txtPassword"
             Height="40"
@@ -64,7 +70,7 @@
             HorizontalAlignment="Left" 
             Width="274" />
         <CheckBox x:Name="cbEyePassword"
-                   Visibility="Hidden"   
+                  Visibility="Hidden"   
                   Width="25"
                   Height="25"
                   Checked="cbEye_Checked"
@@ -73,14 +79,18 @@
             <CheckBox.Template>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel Orientation="Horizontal">
-                        <Image x:Name="CheckMark" Source="pack://application:,,,/Img/CloseEye.jpg" 
+                        <Image x:Name="CheckMark" 
+                               Source="pack://application:,,,/Img/CloseEye.jpg" 
                                Width="25" 
                                Height="25" />
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="CheckMark" Property="Source" Value="pack://application:,,,/Img/OpenEye.jpg" />
+                        <Trigger Property="IsChecked" 
+                                 Value="True">
+                            <Setter TargetName="CheckMark" 
+                                    Property="Source" 
+                                    Value="pack://application:,,,/Img/OpenEye.jpg" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -93,26 +103,26 @@
                VerticalAlignment="Top" 
                Width="181"/>
         <TextBox x:Name="txtVisibleConfirmPassword"
-            Height="40"    
-             FontSize="20"
-             Padding="5,2,47,0"
-             HorizontalAlignment="Left"
-             Margin="254,233,0,0"
-             VerticalAlignment="Top"
-             Width="274">
-
+                 Height="40"    
+                 FontSize="20"
+                 Padding="5,2,47,0"
+                 HorizontalAlignment="Left"
+                 Margin="254,233,0,0"
+                 VerticalAlignment="Top"
+                 Width="274"
+                 TextChanged="txtVisibleConfirmPassword_Changed">
         </TextBox>
         <PasswordBox x:Name="txtConfirmPassword"
-            Height="40"
-            FontSize="20"
-            Padding="5,2,47,0"
-            Margin="254,233,0,0"
-            VerticalAlignment="Top"
-            PasswordChanged="TxtPasswordbox_PasswordChanged" 
-            HorizontalAlignment="Left" 
-            Width="274" />
+                     Height="40"
+                     FontSize="20"
+                     Padding="5,2,47,0"
+                     Margin="254,233,0,0"
+                     VerticalAlignment="Top"
+                     PasswordChanged="TxtPasswordbox_PasswordChanged" 
+                     HorizontalAlignment="Left" 
+                     Width="274" />
         <CheckBox x:Name="cbEyeConfirmPassword"
-                   Visibility="Hidden"   
+                  Visibility="Hidden"   
                   Width="25"
                   Height="25"
                   Checked="cbEye_Checked"
@@ -121,14 +131,18 @@
             <CheckBox.Template>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel Orientation="Horizontal">
-                        <Image x:Name="CheckMark" Source="pack://application:,,,/Img/CloseEye.jpg" 
+                        <Image x:Name="CheckMark" 
+                               Source="pack://application:,,,/Img/CloseEye.jpg" 
                                Width="25" 
                                Height="25" />
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="CheckMark" Property="Source" Value="pack://application:,,,/Img/OpenEye.jpg" />
+                        <Trigger Property="IsChecked" 
+                                 Value="True">
+                            <Setter TargetName="CheckMark" 
+                                    Property="Source" 
+                                    Value="pack://application:,,,/Img/OpenEye.jpg" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -147,7 +161,10 @@
         <CheckBox x:Name="chbRememberMe"
                   Width="30"
                   Height="30"
-                  Margin="5,300,100,80">
+                  Margin="5,300,100,80"
+                  Checked="chbRememberMe_Checked"
+                  Unchecked="chbRememberMe_Unchecked"
+                  IsChecked="{Binding RememberMeIsChecked}">
         </CheckBox>
         <Label x:Name="lRememberMe"
                Content="Remember me"
