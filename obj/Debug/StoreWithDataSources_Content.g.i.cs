@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("data/storewithdb.ldf")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("data/storewithdb.mdf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("data/storewithdatasource.ldf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("data/storewithdatasource.mdf")]
 
 

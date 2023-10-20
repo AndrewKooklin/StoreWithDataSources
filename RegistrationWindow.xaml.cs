@@ -18,12 +18,17 @@ namespace StoreWithDataSources
         GetData data = new GetData();
         Check check = new Check();
         private string password = "";
+        private string passwordHash = "";
         private string confirmPassword = "";
+        private string confirmPasswordHash = "";
+
         public bool RememberMeIsChecked { get; set; }
+
         public RegistrationWindow()
         {
             InitializeComponent();
         }
+
         private void TxtPasswordbox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (txtPassword.Password.Length > 0)
@@ -39,7 +44,6 @@ namespace StoreWithDataSources
                 confirmPassword = txtConfirmPassword.Password;
             }   
             else cbEyeConfirmPassword.Visibility = Visibility.Hidden;
-            
         }
 
         void ShowPassword()
@@ -58,7 +62,6 @@ namespace StoreWithDataSources
                 txtVisibleConfirmPassword.Text = txtConfirmPassword.Password;
                 confirmPassword = txtVisibleConfirmPassword.Text;
             }
-
         }
         void HidePassword()
         {
@@ -66,18 +69,17 @@ namespace StoreWithDataSources
             {
                 txtVisiblePassword.Visibility = Visibility.Hidden;
                 txtPassword.Visibility = Visibility.Visible;
-                password = txtPassword.Password;
+                txtPassword.Password = txtVisiblePassword.Text;
                 txtPassword.Focus();
             }
             if (cbEyeConfirmPassword.IsFocused)
             {
                 txtVisibleConfirmPassword.Visibility = Visibility.Hidden;
                 txtConfirmPassword.Visibility = Visibility.Visible;
-                confirmPassword = txtConfirmPassword.Password;
+                txtConfirmPassword.Password = txtVisibleConfirmPassword.Text;
                 txtVisibleConfirmPassword.Focus();
             }
         }
-
 
         private void cbEye_Checked(object sender, RoutedEventArgs e)
         {
@@ -91,7 +93,6 @@ namespace StoreWithDataSources
 
         private void Registration_Handler(object sender, RoutedEventArgs e)
         {
-
             if (!check.CheckValidationUserName(tbUserName.Text))
             {
                 MessageBox.Show("Username must be " +
@@ -109,19 +110,16 @@ namespace StoreWithDataSources
                                 "\none capital," +
                                 "\nand one digit", "Require",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
-                //txtPassword.Password = "";
                 return;
             }
 
-            
             string userName = "";
             GetData getData = new GetData();
             HashEncryption hashEncryption = new HashEncryption();
             
-
             userName = tbUserName.Text;
-            password = hashEncryption.GetHashPassword(password);
-            confirmPassword = hashEncryption.GetHashPassword(confirmPassword);
+            passwordHash = hashEncryption.GetHashPassword(password);
+            confirmPasswordHash = hashEncryption.GetHashPassword(confirmPassword);
 
             if (!password.Equals(confirmPassword))
             {
@@ -136,13 +134,12 @@ namespace StoreWithDataSources
                 return;
             }
 
+            SqlCommand sqlCommand = new SqlCommand($"INSERT INTO Users(UserName, Password) VALUES('{userName}', '{passwordHash}')", getData.GetSqlConnection());
+
             
-
-            SqlCommand sqlCommand = new SqlCommand($"INSERT INTO Users(UserName, Password) VALUES('{userName}', '{password}')", getData.GetSqlConnection());
-
-            getData.OpenConnection();
             try
             {
+                getData.OpenConnection();
                 if (sqlCommand.ExecuteNonQuery() == 1)
                 {
                     if (RememberMeIsChecked)
@@ -154,30 +151,23 @@ namespace StoreWithDataSources
                     
                     MessageBox.Show("You are registered", "Succsess", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+                getData.CloseConnection();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            getData.CloseConnection();
         }
-
-
 
         private void Load_RegistrationWindow(object sender, RoutedEventArgs e)
         {
-
             txtPassword.PasswordChar = '•';
         }
-
-
 
         private void LogIn_Redirect(object sender, RoutedEventArgs e)
         {
             this.Hide();
             App.mainWindow.Show();
-
         }
 
         private void chbRememberMe_Checked(object sender, RoutedEventArgs e)
@@ -193,11 +183,13 @@ namespace StoreWithDataSources
         private void txtVisiblePassword_Changed(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             password = txtVisiblePassword.Text;
+            txtPassword.Password = txtVisiblePassword.Text;
         }
 
         private void txtVisibleConfirmPassword_Changed(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             confirmPassword = txtVisibleConfirmPassword.Text;
+            txtConfirmPassword.Password = txtVisibleConfirmPassword.Text;
         }
     }
 }
